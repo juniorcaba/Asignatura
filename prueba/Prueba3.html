@@ -1,0 +1,272 @@
+<!-- 
+<html> 
+<head> 
+   	<title>Ejemplo Checkbox</title> 
+<script> 
+function alertaChecked(){ 
+   	alert(document.miFormulario.miCheck.checked);
+} 
+function alertaValue(){ 
+   	alert(document.miFormulario.miCheck.value);
+} 
+function metodoClick(){ 
+   	document.miFormulario.miCheck.click();
+} 
+</script> 
+</head>
+
+<body> 
+<form name="miFormulario" action="mailto:promocion@guiarte.com" enctype="text/plain"> 
+<input type="checkbox" name="miCheck"> 
+<br> 
+<br> 
+<input type="button" value="informa de su propiedad checked" onclick="alertaChecked()"> 
+<input type="button" value="informa de su propiedad value" onclick="alertaValue()"> 
+<br> 
+<br> 
+<input type="button" value="Simula un click" onclick="metodoClick()"> 
+</form> 
+</body> 
+</html>
+ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #f1f1f1;
+}
+
+
+.table > tbody > tr:hover {
+  background-color: #cccccc;
+  cursor: pointer;
+}
+
+
+</style>
+
+<script>
+<!-- onclick="window.print()"  esto es para mostrar pagina a imprimir usar luego 
+ -->
+ 
+
+
+
+	function selFila (){	
+	
+		document.getElementsByTagName("tr")[1].style.background = 'green';
+	}
+	
+	
+	
+	function selInput(){
+	
+		var a = tbody.getElementsByTagName('input');
+		tbody.getElementsByTagName('input')[0].click();
+		tbody.getElementsByTagName("tr")[0].style.background = 'green';
+		for(var i; i<a.lenght; i++){
+			a[i].click();
+		}
+	}
+	</script> 
+
+</head>
+<body>
+<h1>Lista</h1>
+<input type="button" value="Modificar" onClick="modifica()" />
+<table id="table" class="table" name="mitabla">
+		<thead>
+            <tr>
+              <th>Codigo</th>
+              <th>Catedra</th>
+              <th>Asignatura</th>
+              <th>HT</th>
+              <th>HP</th>
+			  <th>CR</th>
+			  <th>Check</th>
+            </tr>
+          </thead>
+		<tbody id="tbody" >
+			<tr onclick="selInput()">
+				<th>INF-512</th>
+				<th><p >Programacion</p> </th>
+				<th>Progrmacion 1</th>
+				<th>4</th>
+				<th>0</th>
+				<th>4</th>
+				<th><input type="checkbox" name="miCheck"></th>
+			</tr>
+			<tr onclick="selInput()">
+				<th>INF-513</th>
+				<th>Programacion</th>
+				<th>Lab. Progrmacion 1</th>
+				<th>0</th>
+				<th>2</th>
+				<th>1</th>
+				<td><input type="checkbox" /></td>
+			</tr>
+			<tr>
+				<th>INF-512</th>
+				<th>Programacion</th>
+				<th>Progrmacion 1</th>
+				<th>4</th>
+				<th>0</th>
+				<th>4</th>
+				<td><input type="checkbox" /></td>
+			</tr>
+			<tr>
+				<th>INF-513</th>
+				<th>Programacion</th>
+				<th>Lab. Progrmacion 1</th>
+				<th>0</th>
+				<th>2</th>
+				<th>1</th>
+				<td><input type="checkbox" /></td>
+			</tr>
+			<tr>
+				<th>INF-512</th>
+				<th>Programacion</th>
+				<th>Progrmacion 1</th>
+				<th>4</th>
+				<th>0</th>
+				<th>4</th>
+				<td><input type="checkbox" /></td>
+			</tr>
+			<tr>
+				<th>INF-513</th>
+				<th>Programacion</th>
+				<th>Lab. Progrmacion 1</th>
+				<th>0</th>
+				<th>2</th>
+				<th>1</th>
+				<td><input type="checkbox" /></td>
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>
+
+
+<!--<html>
+<head>
+<script>
+function modificar() {
+  tab=document.getElementById('tabla');
+  for (i=0; ele=tab.getElementsByTagName('input')[i]; i++) {
+    if (ele.checked) editar(ele);
+    ele.checked = false;
+  }
+}
+function editar(obj) {
+  padre = obj.parentNode.parentNode;
+  celda = padre.getElementsByTagName('td');
+  inicio = 2;//celda para comenzar
+  fin = 6;//celda para terminar
+  
+  for(i=inicio;i<fin;i++){
+  var celdaTmp = celda[i];
+    
+  txt = celdaTmp.innerHTML;
+  celdaTmp.innerHTML = '';
+  inp = celdaTmp.appendChild(document.createElement('input'));
+  inp.value=txt;
+  inp.onblur = function() { this.parentNode.innerHTML = this.value  }
+    
+      
+  }
+}
+
+ 
+</script>
+
+</head>
+<body>
+	<table id="tabla">
+	// Codigo	Catedra	Nombre Asiganatura	Horas Teoricas	Horas Practicas	Credito
+		<thead id="htabla">
+            <tr>
+              <th>Codigo</th>
+              <th>Catedra</th>
+              <th>Asignatura</th>
+              <th>HT</th>
+              <th>HP</th>
+			  <th>CR</th>
+            </tr>
+          </thead>
+		<tbody>
+			<tr>
+				<<th>INF-512</th>
+				<th>Programacion</th>
+				<th>Progrmacion 1</th>
+				<th>4</th>
+				<th>0</th>
+				<th>4</th>
+				<td><input type="checkbox" /></td>
+			</tr>
+			<tr>
+				<th>INF-513</th>
+				<th>Programacion</th>
+				<th>Lab. Progrmacion 1</th>
+				<th>0</th>
+				<th>2</th>
+				<th>1</th>
+				<td><input type="checkbox" /></td>
+			</tr>
+			<tr>
+				<<th>INF-512</th>
+				<th>Programacion</th>
+				<th>Progrmacion 1</th>
+				<th>4</th>
+				<th>0</th>
+				<th>4</th>
+				<td><input type="checkbox" /></td>
+			</tr>
+			<tr>
+				<th>INF-513</th>
+				<th>Programacion</th>
+				<th>Lab. Progrmacion 1</th>
+				<th>0</th>
+				<th>2</th>
+				<th>1</th>
+				<td><input type="checkbox" /></td>
+			</tr>
+			<tr>
+				<<th>INF-512</th>
+				<th>Programacion</th>
+				<th>Progrmacion 1</th>
+				<th>4</th>
+				<th>0</th>
+				<th>4</th>
+				<td><input type="checkbox" /></td>
+			</tr>
+			<tr>
+				<th>INF-513</th>
+				<th>Programacion</th>
+				<th>Lab. Progrmacion 1</th>
+				<th>0</th>
+				<th>2</th>
+				<th>1</th>
+				<td><input type="checkbox" /></td>
+			</tr>
+		</tbody>
+	</table>
+	<input type="button" value="Modificar" onClick="modificar()" />
+</body>
+</html> -->
+
+

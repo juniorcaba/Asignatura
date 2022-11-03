@@ -1,0 +1,123 @@
+<!DOCTYPE html> 
+<html lang="es"> 
+<head>
+	<meta charset="utf-8" />
+	<title>Asignatura</title>
+	<link rel="stylesheet" href="EDITABLE.CSS">	
+	<link rel="icon" href="img/favicon.ico"/>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+ 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script>
+		'use strict';
+
+			var app = angular.module('TablaEditable', []);
+			app.controller('TablaCtrl', ['$scope', function($scope) {
+			  $scope.lista = [{
+				Codiga:'INF-510',
+				Catedra:'Programacion',
+				Asignatura:'Introduccion a la Programacion',
+				HT:'4',
+				HP:'0',
+				CR:'4',
+			
+				
+				
+			  }, 
+			  {
+				Codiga:'INF-510',
+				Catedra:'Programacion',
+				Asignatura:'Introduccion a la Programacion',
+				HT:'4',
+				HP:'0',
+				CR:'4',
+			
+			  }];
+
+			  $scope.eliminar = function(row) {
+				if (confirm("¿Seguro que desea eliminar?")) {
+				  $scope.lista.splice(row, 1);
+				}
+			  };
+
+			  $scope.agregar = function() {
+				$scope.lista.push({
+				Codigo:'INF-000',
+				Catedra:'CATEDRA',
+				Asignatura:'ASIGNATURA',
+				HT:'9',
+				HP:'9',
+				CR:'9',
+			
+				})
+			  };
+
+			  //$scope.recuperarValores = function() {
+				//console.log($scope.lista);
+				//$("#JSON").text(JSON.stringify($scope.lista));
+			  //};
+			}]);
+
+			app.directive('editableTd', [function() {
+			  return {
+				restrict: 'A',
+				link: function(scope, element, attrs) {
+				  element.css("cursor", "pointer");
+				  element.attr('contenteditable', 'true');
+
+				  element.bind('blur keyup change', function() {
+					scope.lista[attrs.row][attrs.field] = element.text();
+				  });
+
+				  element.bind('click', function() {
+					document.execCommand('selectAll', false, null)
+				  });
+				}
+			  };
+			}]);
+	</script>
+	
+</head>
+<body ng-cloak ng-app="TablaEditable"> 
+  
+  <div class="container" ng-controller="TablaCtrl">
+		<h1>Tabla con contenido editable</h1> <br>
+
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<table class="table">
+					<thead>
+						<tr>
+						  <th>Codigo</th>
+						  <th>Catedra</th>
+						  <th>Asignatura</th>
+						  <th>HT</th>
+						  <th>HP</th>
+						  <th>CR</th>
+						
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in lista">
+						  <td style="cursor: not-allowed;"> {{$index + 1}} </td>
+						  <td editable-td row="{{$index}}" field="Codigo"> {{item.Codiga}} </td>
+						  <td editable-td row="{{$index}}" field="Catedra"> {{item.Catedra}} </td>
+						  <td editable-td row="{{$index}}" field="HT"> {{item.HT}} </td>
+						  <td editable-td row="{{$index}}" field="HP"> {{item.HP}} </td>
+						  <td editable-td row="{{$index}}" field="CR"> {{item.CR}} </td>
+
+						  <td> <span class="glyphicon glyphicon-trash" style="cursor: pointer;" ng-click='eliminar($index)' />-</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="btn-group">
+				  <button class="btn btn-default" ng-click='agregar()'> + <!-- <span class="glyphicon glyphicon-plus"></span> -->  </button>
+				 <!--  <button type="button" class="btn btn-default" ng-click='recuperarValores()'>Recuperar Valores</button> -->
+				</div>
+			<br>
+			<br>
+
+			</div>
+		</div>
+	</div> 
+</body>
+</html>

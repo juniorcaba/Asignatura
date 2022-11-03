@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="datosApp">
+    <head>
+        <meta charset="utf-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script src="angular.min.js"></script>
+    </head>
+    <body>
+        <div ng-controller="controladorDatos">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Catedra</th>
+                        <th>Asignatura</th>
+                        <th>HT</th>
+                        <th>HP</th>
+                        <th>CR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="usuario in equipo">
+                        <td>{{usuario.Codigo}}</td>
+                        <td>{{usuario.Catedra}}</td>
+                        <td>{{usuario.Asignatura}}</td>
+                        <td>{{usuario.HT}}</td>
+                        <td>{{usuario.HP}}</td>
+                        <td>{{usuario.CR}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <script>
+            var misDatos = angular.module('datosApp', []);
+            misDatos.controller('controladorDatos',function($scope, $http) {$scope.importar = function(){
+                
+                    $http.get('php/listar.php').success(function(datos){
+                            $scope.equipo = datos;
+
+                    });
+                }
+                $scope.importar();
+            });
+        </script>
+    </body>
+</html>

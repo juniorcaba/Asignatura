@@ -1,0 +1,190 @@
+<!DOCTYPE html> 
+<html lang="es"> 
+<head>
+	<meta charset="utf-8" />
+	<title>Lista</title>
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/EstiloAsig.css">	
+<!-- 	<link rel="stylesheet" href="EDITABLE.CSS">	 -->
+	<meta name="responsive" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="img/favicon.ico"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="edit-table.css">
+    <script defer src="edit-table.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script>
+		'use strict';
+
+			//Declaracion de la variable 
+			var app = angular.module('TablaEditable', []);
+			
+			//Funcion principal para crear por defecto valores en la tabla.
+			app.controller('TablaCtrl', ['$scope', function($scope) {
+				$scope.lista = [
+					{
+						Codigo:'INF-510',
+						Catedra:'Programacion',
+						Asignatura:'Introduccion a la Programacion',
+						HT:'4',
+						HP:'0',
+						CR:'4'
+					}, 
+					{
+						Codigo:'INF-512',
+						Catedra:'Programacion',
+						Asignatura:'Programacion 1',
+						HT:'4',
+						HP:'0',
+						CR:'4'
+					},
+					{
+						Codigo:'INF-514',
+						Catedra:'Programacion',
+						Asignatura:'Programacion 2',
+						HT:'4',
+						HP:'0',
+						CR:'4'
+					}
+				];
+			  
+			  //Funcion para Eliminar Filas	y confirma con un ventana emergente.
+			  $scope.eliminar = function(row) {
+				if (confirm("¿Seguro que desea eliminar?")) {
+				  $scope.lista.splice(row, 1);
+				}
+			  };
+			  
+			  //Funcion para Agregar filas agregando vamores por defecto como muestra.
+			  $scope.agregar = function() {
+				$scope.lista.push({
+				Codigo:'INF-000',
+				Catedra:'CATEDRA',
+				Asignatura:'ASIGNATURA',
+				HT:'9',
+				HP:'9',
+				CR:'9'
+				})
+			  };
+				// Funciona para recuperar valores 
+				//Estamos trabajando con esto aun no nos funciona perdonen. :)
+				
+			  //$scope.recuperarValores = function() {
+				//console.log($scope.lista);
+				//$("#JSON").text(JSON.stringify($scope.lista));
+			  //};
+			  
+			}]);
+			
+			//Funciona para editar las tuplas, filas o row de la tablas.
+			app.directive('editableTd', [function() {
+			  return {
+				restrict: 'A',
+				link: function(scope, element, attrs) {
+				  element.css("cursor", "pointer");
+				  element.attr('contenteditable', 'true');
+
+				  //element.bind('blur keyup change', function() {
+				  //	scope.lista[attrs.row][attrs.field] = element.text();
+				 // });
+
+				  //element.bind('click', function() {
+				  //document.execCommand('selectAll', false, null)
+				  // });
+				}
+			  };
+			}]);
+	</script>
+	
+</head>
+
+  <body>
+    <header>
+      <div class="header-top">
+			<a href="index.html">
+			<img src="img/gestion_academica.svg" alt="Gestión Acádemica">
+		
+			<a href="https://www.uasd.edu.do/">
+            <img src="img/logo_uasd.svg" alt="Universidad Autónoma de Santo  Domingo">
+        </a>
+       
+      </div>
+      <span class="header-bottom"></span>
+    </header> 
+ <!--    <section class="content2">
+			<div class="block blockLista">
+			<ul class="link-list">
+				 <li class="link-item2">
+				  <a href="subasignaturas.html">
+					<img class="link-icon" src="img/Crearasignatura.svg">
+					<span class="caption">Crear_Asignatura</span>
+				  </a>
+				</li>
+				<li class="link-item2">
+				  <a href="asignaturas.html">
+					<img class="link-icon" src="img/asignaturas.svg">
+					<span class="caption">Asignaturas</span>
+				  </a>
+				</li>
+				<li class="link-item2">
+				  <a href="sublista.html">
+					<img class="link-icon" src="img/lista.svg">
+					<span class="caption">Lista</span>
+				  </a>
+				</li>
+			</ul>
+		</div>
+		
+		<div>
+			<h1 class="titulo"><br>Lista<br><br><h1>
+		</div>
+
+			
+    </section> -->
+	
+		
+
+		<section class="content2" >
+		<div ng-cloak ng-app="TablaEditable">  
+		<div class="container" ng-controller="TablaCtrl">
+		<div class="panel panel-default">
+		<div class="panel-body">
+		<table class="table table-bordered editable" id="dataTable" width="100%" cellspacing="0">
+		<thead>
+			<tr>
+			  <th>NO.</th>
+			  <th>Codigo</th>
+			  <th>Catedra</th>
+			  <th>Asignatura</th>
+			  <th>HT</th>
+			  <th>HP</th>
+			  <th>CR</th>
+			  <th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in lista">
+				<td style="cursor: not-allowed;"> {{$index + 1}} </td>
+				<td row="{{$index}}" field="Codigo"> {{item.Codigo}} </td>
+				<td editable-td row="{{$index}}" field="Asignatura"> {{item.Asignatura}} </td>
+				<td editable-td row="{{$index}}" field="Catedra"> {{item.Catedra}} </td>
+				<td editable-td row="{{$index}}" field="HT"> {{item.HT}} </td>
+				<td editable-td row="{{$index}}" field="HP"> {{item.HP}} </td>
+				<td editable-td row="{{$index}}" field="CR"> {{item.CR}} </td>
+				<td> <button class="btn btn-default" ng-click='eliminar(this)'> <img src="img/eliminar.svg"> </button> </td>
+			</tr>
+		</tbody>
+			<tfoot>
+				<tr>
+					<td><button class="btn btn-default" ng-click='agregar()'> <img src="img/agregar.svg"> </button></td>
+				</tr>
+			</tfoot>
+		</table> 
+		</div>
+		</div>	
+		</div>
+		</div>
+		</section>
+    <footer>
+	</footer>
+  </body>
+</html>
